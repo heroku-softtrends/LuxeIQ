@@ -1,0 +1,195 @@
+﻿@page
+@using LuxeIQ.Common
+@using LuxeIQ.ViewModels
+
+@model addeditmanufacturerModel
+@{
+    ViewData["Title"] = "Manufacturer";
+}
+<div class="container-full">
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">@Model.action Manufacturer</h3>
+                    </div>
+                    <div class="box-body">
+                        <form method="post">
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Business Name</label>
+                                        @Html.TextBoxFor(model => model.manufacturer.businessName, new { @class = "form-control", tabindex = "0", @placeholder = "Business Name" })
+                                        @Html.ValidationMessageFor(model => model.manufacturer.businessName)
+                                        @Html.HiddenFor(model => model.manufacturer.manufacturerId)
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Address1</label>
+                                        @Html.TextBoxFor(model => model.manufacturer.address1, new { @class = "form-control", tabindex = "1", @placeholder = "Address1" })
+                                        @Html.ValidationMessageFor(model => model.manufacturer.address1)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Address2</label>
+                                        @Html.TextBoxFor(model => model.manufacturer.address2, new { @class = "form-control", tabindex = "2", @placeholder = "Address2" })
+                                        @Html.ValidationMessageFor(model => model.manufacturer.address2)
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">City</label>
+                                        @Html.TextBoxFor(model => model.manufacturer.city, new { @class = "form-control", tabindex = "3", @placeholder = "City" })
+                                        @Html.ValidationMessageFor(model => model.manufacturer.city)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">State</label>
+                                        @Html.TextBoxFor(model => model.manufacturer.state, new { @class = "form-control", tabindex = "4", @placeholder = "State" })
+                                        @Html.ValidationMessageFor(model => model.manufacturer.state)
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Zipcode</label>
+                                        @Html.TextBoxFor(model => model.manufacturer.zipcode, new { @class = "form-control", tabindex = "5", @placeholder = "Zipcode" })
+                                        @Html.ValidationMessageFor(model => model.manufacturer.zipcode)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Country</label>
+                                        @Html.TextBoxFor(model => model.manufacturer.country, new { @class = "form-control", tabindex = "6", @placeholder = "Country" })
+                                        @Html.ValidationMessageFor(model => model.manufacturer.country)
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Phone</label>
+                                        @Html.TextBoxFor(model => model.manufacturer.phone, new { @class = "form-control", tabindex = "7", @placeholder = "Phone" })
+                                        @Html.ValidationMessageFor(model => model.manufacturer.phone)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Contact Name</label>
+                                        @Html.TextBoxFor(model => model.manufacturer.contactName, new { @class = "form-control", tabindex = "8", @placeholder = "Contact Name" })
+                                        @Html.ValidationMessageFor(model => model.manufacturer.contactName)
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Contact Email</label>
+                                        @Html.TextBoxFor(model => model.manufacturer.contactEmail, new { @class = "form-control", tabindex = "9", @placeholder = "Contact Email" })
+                                        @Html.ValidationMessageFor(model => model.manufacturer.contactEmail)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Corporate Admin</label>
+                                        @Html.TextBoxFor(model => model.manufacturer.corporateAdmin, new { @class = "form-control", tabindex = "10", @placeholder = "Corporate Admin" })
+                                        @Html.ValidationMessageFor(model => model.manufacturer.corporateAdmin)
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Corporate Admin Email</label>
+                                        @Html.TextBoxFor(model => model.manufacturer.corporateAdminEmail, new { @class = "form-control", tabindex = "11", @placeholder = "Corporate Admin Email" })
+                                        @Html.ValidationMessageFor(model => model.manufacturer.corporateAdminEmail)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Sales Admin</label>
+                                        @Html.TextBoxFor(model => model.manufacturer.salesAdmin, new { @class = "form-control", tabindex = "12", @placeholder = "Sales Admin" })
+                                        @Html.ValidationMessageFor(model => model.manufacturer.salesAdmin)
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Sales Admin Email</label>
+                                        @Html.TextBoxFor(model => model.manufacturer.salesAdminEmail, new { @class = "form-control", tabindex = "13", @placeholder = "Sales Admin Email" })
+                                        @Html.ValidationMessageFor(model => model.manufacturer.salesAdminEmail)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Other Admin</label>
+                                        @Html.TextBoxFor(model => model.manufacturer.otherAdmin, new { @class = "form-control", tabindex = "12", @placeholder = "Other Admin" })
+                                        @Html.ValidationMessageFor(model => model.manufacturer.otherAdmin)
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Other Admin Email</label>
+                                        @Html.TextBoxFor(model => model.manufacturer.otherAdminEmail, new { @class = "form-control", tabindex = "13", @placeholder = "Other Admin Email" })
+                                        @Html.ValidationMessageFor(model => model.manufacturer.otherAdminEmail)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="box-footer text-end">
+                                @if (Model.buttonStatus == true)
+                                {
+                                    <a type="button" class="btn btn-block btn-danger" asp-area="" asp-page="/manufacturers">Cancel</a>
+                                    <input class="btn btn-block btn-primary" type="submit" name="btnSave" value="Submit" />
+                                }
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+@section Scripts {
+    <script type="text/javascript">
+        Helpers.setFormDefaultValidator();
+        $(document).ready(function () {
+            if("@Model.action"=="View")
+            {
+                $("input[class='form-control']").attr("disabled", "disabled");
+            }
+          
+            $('form').data('validator', null);
+            $.validator.unobtrusive.parse($('form'));
+
+            $('input[type=submit]').on("click", function (e) {
+                $("form").find("input,textarea,select").each(function () {
+                    if ($(this).is(":visible")) {
+                        $(this).prop("disabled", false).rules('add', {
+                            required: true
+                        });
+                    }
+                    else {
+                        //alert($(this).attr("id"));
+                        $(this).rules('remove', 'required');
+                    }
+                });
+                if (!$("form").valid()) {
+                    e.preventDefault();
+                    return;
+                }
+            });
+        });
+    </script>
+}

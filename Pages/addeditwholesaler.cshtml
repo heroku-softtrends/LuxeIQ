@@ -1,0 +1,110 @@
+﻿@page
+@using LuxeIQ.Common
+@using LuxeIQ.ViewModels
+
+@model addeditwholesalerModel
+@{
+    ViewData["Title"] = "Wholesaler";
+}
+<div class="container-full">
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">View Wholesaler</h3>
+                    </div>
+                    <div class="box-body">
+                        <form method="post">
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Business Name</label>
+                                        @Html.TextBoxFor(model => model.wholesaler.businessName, new { @class = "form-control", tabindex = "0", @placeholder = "Business Name" })
+                                        @Html.ValidationMessageFor(model => model.wholesaler.businessName)
+                                        @Html.HiddenFor(model => model.wholesaler.wholesalerId)
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Address1</label>
+                                        @Html.TextBoxFor(model => model.wholesaler.address1, new { @class = "form-control", tabindex = "1", @placeholder = "Address1" })
+                                        @Html.ValidationMessageFor(model => model.wholesaler.address1)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Address2</label>
+                                        @Html.TextBoxFor(model => model.wholesaler.address2, new { @class = "form-control", tabindex = "2", @placeholder = "Address2" })
+                                        @Html.ValidationMessageFor(model => model.wholesaler.address2)
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">City</label>
+                                        @Html.TextBoxFor(model => model.wholesaler.city, new { @class = "form-control", tabindex = "3", @placeholder = "City" })
+                                        @Html.ValidationMessageFor(model => model.wholesaler.city)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">State</label>
+                                        @Html.TextBoxFor(model => model.wholesaler.state, new { @class = "form-control", tabindex = "4", @placeholder = "State" })
+                                        @Html.ValidationMessageFor(model => model.wholesaler.state)
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Zipcode</label>
+                                        @Html.TextBoxFor(model => model.wholesaler.zipcode, new { @class = "form-control", tabindex = "5", @placeholder = "Zipcode" })
+                                        @Html.ValidationMessageFor(model => model.wholesaler.zipcode)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Country</label>
+                                        @Html.TextBoxFor(model => model.wholesaler.country, new { @class = "form-control", tabindex = "6", @placeholder = "Country" })
+                                        @Html.ValidationMessageFor(model => model.wholesaler.country)
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Purchase Multiplier</label>
+                                        @Html.TextBoxFor(model => model.wholesaler.purchasingMultiplier, new { @class = "form-control", tabindex = "7", @placeholder = "Purchase Multiplier" })
+                                        @Html.ValidationMessageFor(model => model.wholesaler.purchasingMultiplier)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="box-footer">
+                                @* <a type="button" class="btn btn-block btn-danger" asp-area="" asp-page="/users">Cancel</a>
+                                <input class="btn btn-block btn-primary" type="submit" name="btnSave" value="Submit" /> *@
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+@section Scripts {
+    <script type="text/javascript">
+        Helpers.setFormDefaultValidator();
+        $(document).ready(function () {
+
+            if ("@Model.action" == "View") {
+                $("input[class='form-control']").attr("disabled", "disabled");
+                $("select[class='form-select']").attr("disabled", "disabled");
+            }
+            $('form').data('validator', null);
+            $.validator.unobtrusive.parse($('form'));
+        });
+    </script>
+}

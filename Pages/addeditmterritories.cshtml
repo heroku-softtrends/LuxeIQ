@@ -1,0 +1,109 @@
+﻿@page
+@using LuxeIQ.Common
+@using LuxeIQ.ViewModels
+
+@model addeditmterritoriesModel
+@{
+    ViewData["Title"] = "Headquarters";
+}
+<div class="container-full">
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">View Headquarter</h3>
+                    </div>
+                    <div class="box-body">
+                        <form method="post">
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Manufacturer</label>
+                                        @if (Model != null && Model.mterritories.manufacturerId > 0)
+                                        {
+                                            <select class="form-select" id="ddManufacturer" name="mterritories.ManufacturerId" value="@Model.mterritories.manufacturerId" data-val="true" data-val-required="Select Manufacturer">
+                                                @if (Model.manufacturers != null && Model.manufacturers.Count() > 0)
+                                                {
+                                                    <option>Select Manufacturer</option>
+                                                    @foreach (var app in Model.manufacturers)
+                                                    {
+                                                        @if (app.manufacturerId == Model.mterritories.manufacturerId)
+                                                        {
+                                                            <option selected="selected" value="@app.manufacturerId">@app.businessName</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@app.manufacturerId">@app.businessName</option>
+                                                        }
+                                                    }
+                                                }
+                                            </select>
+                                        }
+                                        else
+                                        {
+                                            <select class="form-select" id="ddManufacturer" name="mterritories.ManufacturerId" value="@Model.mterritories.manufacturerId" data-val="true" data-val-required="Select Manufacturer">
+                                            </select>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Rep Code</label>
+                                        @Html.TextBoxFor(model => model.mterritories.repCode, new { @class = "form-control", tabindex = "1", @placeholder = "Rep Code" })
+                                        @Html.ValidationMessageFor(model => model.mterritories.repCode)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Sales Region</label>
+                                        @Html.TextBoxFor(model => model.mterritories.salesRegion, new { @class = "form-control", tabindex = "2", @placeholder = "Sales Region" })
+                                        @Html.ValidationMessageFor(model => model.mterritories.salesRegion)
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Sales Agency</label>
+                                        @Html.TextBoxFor(model => model.mterritories.salesAgency, new { @class = "form-control", tabindex = "3", @placeholder = "Sales Agency" })
+                                        @Html.ValidationMessageFor(model => model.mterritories.salesAgency)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Sales Territory</label>
+                                        @Html.TextBoxFor(model => model.mterritories.salesTerritory, new { @class = "form-control", tabindex = "4", @placeholder = "Sales Territory" })
+                                        @Html.ValidationMessageFor(model => model.mterritories.salesTerritory)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="box-footer">
+                                @* <a type="button" class="btn btn-block btn-danger" asp-area="" asp-page="/users">Cancel</a>
+                                <input class="btn btn-block btn-primary" type="submit" name="btnSave" value="Submit" /> *@
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+@section Scripts {
+    <script type="text/javascript">
+        Helpers.setFormDefaultValidator();
+        $(document).ready(function () {
+
+            if ("@Model.action" == "View") {
+                $("input[class='form-control']").attr("disabled", "disabled");
+                $("select[class='form-select']").attr("disabled", "disabled");
+            }
+            $('form').data('validator', null);
+            $.validator.unobtrusive.parse($('form'));
+        });
+    </script>
+}

@@ -1,0 +1,172 @@
+﻿@page
+@model LuxeIQ.Pages.wholesalershowroomsModel
+@{
+    ViewData["Title"] = "Wholesaler Showroom page";
+}
+
+
+<div class="container-full">
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Wholesaler Showrooms</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <form method="post" asp-page-handler="Import" enctype="multipart/form-data">
+                            <div class="row bg-light mb-10 p-10">
+                                <div class="row col-md-12">
+                                    <div class="col-md-3">
+                                        <select class="form-select" id="ddWholesaler" name="ddlWholesaler" required>
+                                            @if (Model != null && Model.wholesaler != null && Model.wholesaler.Count() > 0)
+                                            {
+                                                <option>Select Wholesaler</option>
+                                                @foreach (var app in Model.wholesaler)
+                                                {
+                                                    <option value="@app.wholesalerId">@app.businessName</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                    @* <div class="col-md-3">
+                                        <select class="form-select" id="ddWholesalerHQ" name="ddlWholesalerHQ" required>
+                                            @if (Model != null && Model.wholesalerHQ != null && Model.wholesalerHQ.Count() > 0)
+                                            {
+                                                @foreach (var app in Model.wholesalerHQ)
+                                                {
+                                                    <option value="@app.wholesalerHQId">@app.customer</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div> *@
+                                    <div class="col-md-6">
+                                        <div class="row col-md-12">
+                                            <div class="col-md-9">
+                                                <input class="form-control form-control-sm" name="fileInput" id="uploadFile" type="file">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <input type="submit" value="Import" name="btnsubmit" onclick="return confirmupload();" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="table-responsive">
+                            <table id="example5" class="table table-bordered table-striped" style="width: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Address</th>
+                                        <th>Contact Name</th>
+                                        <th>Email</th>
+                                        <th>Country</th>
+                                        <th>Phone</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model != null && Model.showrooms != null && Model.showrooms.Count() > 0)
+                                    {
+                                        @foreach (var app in Model.showrooms)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @app.businessName
+                                                </td>
+
+                                                <td>
+                                                    <span>@app.address1</span>&nbsp;<span>@app.address2</span>
+                                                </td>
+                                                <td>
+                                                    @app.contactName
+                                                </td>
+                                                <td>
+                                                    @app.contactMail
+                                                </td>
+                                                <td>
+                                                    @app.country
+                                                </td>
+                                                <td>
+                                                    @app.phoneNumber
+                                                </td>
+                                                <td>
+                                                    <form asp-page="addeditwshowroom" asp-page-handler="view" asp-route-type="View" asp-route-id="@app.showroomId" method="post">
+                                                        <button class="btn btn-xs btn-primary">View</button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+        </div>
+        <!-- /.row -->
+    </section>
+    <!-- /.content -->
+</div>
+@section Scripts {
+    <script src="~/assets/vendor_components/datatable/datatables.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // DataTable
+            $('#example5').DataTable();
+
+            // $("#ddWholesaler").change(function () {
+
+            //     Helpers.showMask();
+            //     $.ajax({
+            //         type: "GET",
+            //         url: '/wholesalershowrooms?handler=WholesalerHQ',
+            //         data: { "wholesalerId": this.value },
+            //         beforeSend: function (xhr) {
+            //             xhr.setRequestHeader("XSRF-TOKEN",
+            //                 $('input:hidden[name="__RequestVerificationToken"]').val());
+            //         },
+            //         contentType: "application/json; charset=utf-8",
+            //         dataType: "json"
+            //     }).done(function (data) {
+            //         console.log(data);
+            //         if (data != null && data.length > 0) {
+            //             var ddlWholesalerHQ = $("#ddWholesalerHQ");
+            //             // $("#ddWholesalerHQ").closest(".form-group").show()
+            //             //  ddlWholesalerHQ.empty().append($('<option></option>').val('').text('Select Wholesaler HQ'));
+            //             $.each(data, function (index, item) {
+            //                 ddlWholesalerHQ.append($('<option></option>').val(item.wholesalerHQId).text(item.customer));
+            //             });
+            //         }
+            //     }).always(function () {
+            //         Helpers.hideMask();
+            //     });
+
+            // });
+        });
+        function confirmupload() {
+            if (document.getElementById("ddWholesaler")) {
+                if (document.getElementById("ddWholesaler").value == undefined || document.getElementById("ddWholesaler").value == "Select Wholesaler") {
+                    alert("Select wholesaler");
+                    return false;
+                }
+                else {
+                    if (document.getElementById("uploadFile").value == undefined || document.getElementById("uploadFile").value == "") {
+                        alert("Select a file to upload");
+                        return false;
+                    }
+                    else {
+                        return true;
+                    }
+                }
+            }
+        }
+    </script>
+}

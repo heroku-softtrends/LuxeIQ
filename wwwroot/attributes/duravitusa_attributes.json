@@ -1,0 +1,157 @@
+[
+  {
+    "field_name": "Article Number",
+    "include_in_attribute": true,
+    "datatype": "TEXT"
+  },
+  {
+    "field_name": "Model Number",
+    "include_in_attribute": true,
+    "datatype": "TEXT"
+  },
+  {
+    "field_name": "EAN",
+    "include_in_attribute": true,
+    "datatype": "TEXT"
+  },
+  {
+    "field_name": "Series",
+    "include_in_attribute": true,
+    "datatype": "TEXT"
+  },
+  {
+    "field_name": "Product Description",
+    "include_in_attribute": true,
+    "datatype": "TEXT"
+  },
+  {
+    "field_name": "Product Information",
+    "include_in_attribute": true,
+    "datatype": "TEXT"
+  },
+  {
+    "field_name": "List Price",
+    "include_in_attribute": true,
+    "datatype": "DECIMAL"
+  },
+  {
+    "field_name": "MAP Price",
+    "include_in_attribute": true,
+    "datatype": "DECIMAL"
+  },
+  {
+    "field_name": "Currency",
+    "include_in_attribute": true,
+    "datatype": "TEXT"
+  },
+  {
+    "field_name": "Product Status",
+    "include_in_attribute": true,
+    "datatype": "TEXT"
+  },
+  {
+    "field_name": "Direct Replacement",
+    "include_in_attribute": true,
+    "datatype": "TEXT"
+  },
+  {
+    "field_name": "Replacement Notes",
+    "include_in_attribute": true,
+    "datatype": "TEXT"
+  },
+  {
+    "field_name": "Kit",
+    "include_in_attribute": true,
+    "datatype": "TEXT"
+  },
+  {
+    "field_name": "Customs Tariff No",
+    "include_in_attribute": true,
+    "datatype": "TEXT"
+  },
+  {
+    "field_name": "Main Product Group",
+    "include_in_attribute": true,
+    "datatype": "TEXT"
+  },
+  {
+    "field_name": "Product Group ",
+    "include_in_attribute": true,
+    "datatype": "TEXT"
+  },
+  {
+    "field_name": "Product Type",
+    "include_in_attribute": true,
+    "datatype": "TEXT"
+  },
+  {
+    "field_name": "Color",
+    "include_in_attribute": true,
+    "datatype": "TEXT"
+  },
+  {
+    "field_name": "Surface Treatment",
+    "include_in_attribute": true,
+    "datatype": "TEXT"
+  },
+  {
+    "field_name": "Qty per Pallet",
+    "include_in_attribute": true,
+    "datatype": "INTEGER"
+  },
+  {
+    "field_name": "Product Weight LBS",
+    "include_in_attribute": true,
+    "datatype": "DECIMAL"
+  },
+  {
+    "field_name": "Shipping Type",
+    "include_in_attribute": true,
+    "datatype": "TEXT"
+  },
+  {
+    "field_name": "Segment",
+    "include_in_attribute": true,
+    "datatype": "TEXT"
+  },
+  {
+    "field_name": "Stock Type",
+    "include_in_attribute": true,
+    "datatype": "TEXT"
+  },
+  {
+    "field_name": "Product Length",
+    "include_in_attribute": true,
+    "datatype": "DECIMAL"
+  },
+  {
+    "field_name": "Product Width",
+    "include_in_attribute": true,
+    "datatype": "DECIMAL"
+  },
+  {
+    "field_name": "Product Height",
+    "include_in_attribute": true,
+    "datatype": "DECIMAL"
+  },
+  {
+    "field_name": "Shipping Length",
+    "include_in_attribute": true,
+    "datatype": "DECIMAL"
+  },
+  {
+    "field_name": "Shipping Width",
+    "include_in_attribute": true,
+    "datatype": "DECIMAL"
+  },
+  {
+    "field_name": "Shipping Height",
+    "include_in_attribute": true,
+    "datatype": "DECIMAL"
+  },
+  {
+    "field_name": "Shipping Weight LBS",
+    "include_in_attribute": true,
+    "datatype": "decimal"
+  }
+]

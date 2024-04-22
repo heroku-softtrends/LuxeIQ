@@ -1,0 +1,501 @@
+﻿@page
+@using LuxeIQ.Common
+@using LuxeIQ.ViewModels
+
+@model newuserModel
+@{
+    ViewData["Title"] = "Users";
+}
+<div class="container-full">
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        @if (Model.action == "password")
+                        {
+                            <h3 class="box-title">Set Password to the User @Model.user.name</h3>
+                        }
+                        else
+                        {
+                            <h3 class="box-title">@Model.action @Model.usertypeName</h3>
+                        }
+                    </div>
+                    <div class="box-body">
+                        <form method="post">
+                            <div class="col-md-12">
+                                @* <div class="form-group clearfix">
+                                <label class="col-sm-2 col-form-label">User Type<span style="color:red">*</span></label>
+                                <div class="col-sm-10">
+                                <select class="form-select" id="ddUserType" name="user.userType" value="@Model.user.userType" data-val="true" disabled="@Model.usertypeDisable" data-val-required="Please select a user type">
+                                @foreach (UserType ut in EnumsOrder.ToList<UserType>())
+                                {
+                                switch (ut)
+                                {
+                                case UserType.None:
+                                <option value="">Please select Data Source</option>
+                                break;
+                                case UserType.M:
+                                @if (Model != null && Model.user != null && !string.IsNullOrEmpty(Model.user.userType) && LuxeIQ.Common.Utilities.ParseEnum<UserType>(Model.user.userType) == ut)
+                                {
+                                <option value="@ut" selected="selected">Manufacturer Admin</option>
+                                }
+                                else if (Constants.LUXEIQ_LOGIN_USER == "admin")
+                                {
+                                <option value="@ut" selected="selected">Manufacturer Admin</option>
+                                }
+                                else
+                                {
+                                <option value="@ut">Manufacturer Admin</option>
+                                }
+                                break;
+
+                                case UserType.SA:
+                                @if (Model != null && Model.user != null && !string.IsNullOrEmpty(Model.user.userType) && LuxeIQ.Common.Utilities.ParseEnum<UserType>(Model.user.userType) == ut)
+                                {
+                                <option value="@ut" selected="selected">Sales Rep User</option>
+                                }
+                                else
+                                {
+                                <option value="@ut">Sales Rep User</option>
+                                }
+                                break;
+                                }
+                                }
+
+                                </select>
+                                @Html.ValidationMessageFor(model => model.user.userType)
+                                </div>
+                                </div> *@
+
+                                <div class="form-group clearfix" style="display:@((Model.user != null && Model.user.userType =="M" && Model.user.ManufacturerId > 0) ||(Constants.LUXEIQ_LOGIN_USER=="admin" && Model.manufacturers.Count() > 0)?"block":"none");">
+                                    <label class="col-sm-2 col-form-label">Manufacturers<span style="color:red">*</span></label>
+                                    <div class="col-sm-10">
+                                        @if (Model != null && Model.user.ManufacturerId > 0 || (Model.user != null && Model.user.userType == "SA") || (Constants.LUXEIQ_LOGIN_USER == "admin" && Model.manufacturers.Count() > 0))
+                                        {
+                                            <select class="form-select" id="ddManufacturer" name="user.ManufacturerId" value="@Model.user.ManufacturerId" data-val="true" data-val-required="Please select manufacturer" @(Model.user.userId > 0 ? "disabled" : "")>
+                                                @if (Model.manufacturers != null && Model.manufacturers.Count() > 0)
+                                                {
+                                                    <option value="">Select Manufacturer</option>
+                                                    @foreach (var app in Model.manufacturers)
+                                                    {
+                                                        @if (app.manufacturerId == Model.user.ManufacturerId)
+                                                        {
+                                                            <option selected="selected" value="@app.manufacturerId">@app.businessName</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@app.manufacturerId">@app.businessName</option>
+                                                        }
+                                                    }
+                                                }
+                                            </select>
+                                        }
+                                        else
+                                        {
+                                            <select class="form-select" id="ddManufacturer" name="user.ManufacturerId" value="@Model.user.ManufacturerId" data-val="true" data-val-required="Please select manufacturer" @(Model.user.userId > 0 ? "disabled" : "")>
+                                            </select>
+                                        }
+                                        @Html.ValidationMessageFor(model => model.user.ManufacturerId)
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix" style="display:@((Model.user != null && Model.user.userType =="W" && Model.user.WholesalerId > 0)?"block":"none");">
+                                    <label class="col-sm-2 col-form-label">Wholesalers<span style="color:red">*</span></label>
+                                    <div class="col-sm-10">
+                                        @if (Model != null && Model.user.WholesalerId > 0)
+                                        {
+                                            <select class="form-select" id="ddWholesaler" name="user.WholesalerId" value="@Model.user.WholesalerId" data-val="true" data-val-required="Please select wholesaler" @(Model.user.userId > 0 ? "disabled" : "")>
+                                                @if (Model.wholesalers != null && Model.wholesalers.Count() > 0)
+                                                {
+                                                    <option>Select Wholesaler</option>
+                                                    @foreach (var app in Model.wholesalers)
+                                                    {
+                                                        @if (app.wholesalerId == Model.user.WholesalerId)
+                                                        {
+                                                            <option selected="selected" value="@app.wholesalerId">@app.businessName</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@app.wholesalerId">@app.businessName</option>
+                                                        }
+                                                    }
+                                                }
+                                            </select>
+                                        }
+                                        else
+                                        {
+                                            <select class="form-select" id="ddWholesaler" name="user.WholesalerId" value="@Model.user.WholesalerId" data-val="true" data-val-required="Please select wholesaler" @(Model.user.userId > 0 ? "disabled" : "")>
+                                            </select>
+                                        }
+                                        @Html.ValidationMessageFor(model => model.user.WholesalerId)
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix" style="display:@((Model.user != null && Model.user.userType =="SA")?"block":"none");">
+                                    <label class="col-sm-6 col-form-label">Sales Rep Agencies<span style="color:red">*</span></label>
+                                    <div class="col-sm-10">
+                                        @if (Model != null && Model.salesRepAgencies != null)
+                                        {
+                                            <select class="form-select" id="ddSalesRepAgencies" name="user.salesRepAgencyId" value="@Model.user.salesRepAgencyId" data-val="true" data-val-required="Please select Sales Rep Agency" @(Model.user.userId > 0 ? "disabled" : "")>
+                                                @if (Model.salesRepAgencies != null && Model.salesRepAgencies.Count() > 0)
+                                                {
+                                                    <option>Select Sales Rep Agency</option>
+                                                    @foreach (var app in Model.salesRepAgencies)
+                                                    {
+                                                        @if (app.salesRepAgencyId == Model.user.salesRepAgencyId)
+                                                        {
+                                                            <option selected="selected" value="@app.salesRepAgencyId">@app.salesRepAgencyName</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@app.salesRepAgencyId">@app.salesRepAgencyName</option>
+                                                        }
+                                                    }
+                                                }
+                                            </select>
+                                        }
+                                        else
+                                        {
+                                            <select class="form-select" id="ddMTerritory" name="user.MTerritoryId" value="@Model.user.salesRepAgencyId" data-val="true" data-val-required="Please select Manufacturer’s Territory" @(Model.user.userId > 0 ? "disabled" : "")>
+                                            </select>
+                                        }
+                                        @Html.ValidationMessageFor(model => model.user.salesRepAgencyId)
+                                    </div>
+                                </div>
+
+                                @*   <div class="form-group clearfix" style="display:@((Model.user != null && Model.user.userType =="SA" && Model.user.MTerritoryId > 0)?"block":"none");">
+                                <label class="col-sm-6 col-form-label">Manufacturer's Territory<span style="color:red">*</span></label>
+                                <div class="col-sm-10">
+                                @if (Model != null && Model.user.MTerritoryId > 0)
+                                {
+                                <select class="form-select" id="ddMTerritory" name="user.MTerritoryId" value="@Model.user.MTerritoryId" data-val="true" data-val-required="Please select Manufacturer’s Territory" @(Model.user.userId > 0 ? "disabled" : "")>
+                                @if (Model.manufacturersTerritory != null && Model.manufacturersTerritory.Count() > 0)
+                                {
+                                <option>Select Manufacturer Territory</option>
+                                @foreach (var app in Model.manufacturersTerritory)
+                                {
+                                @if (app.territoryId == Model.user.MTerritoryId)
+                                {
+                                <option selected="selected" value="@app.territoryId">@app.salesTerritory</option>
+                                }
+                                else
+                                {
+                                <option value="@app.territoryId">@app.salesTerritory</option>
+                                }
+                                }
+                                }
+                                </select>
+                                }
+                                else
+                                {
+                                <select class="form-select" id="ddMTerritory" name="user.MTerritoryId" value="@Model.user.MTerritoryId" data-val="true" data-val-required="Please select Manufacturer’s Territory" @(Model.user.userId > 0 ? "disabled" : "")>
+                                </select>
+                                }
+                                @Html.ValidationMessageFor(model => model.user.MTerritoryId)
+                                </div>
+                                </div> *@
+                                <div class="form-group clearfix" style="display:@((Model.user != null && Model.user.userType =="SH" && Model.user.WholesalerShowroomId > 0)?"block":"none");">
+                                    <label class="col-sm-6 col-form-label">Showroom Location<span style="color:red">*</span></label>
+                                    <div class="col-sm-10">
+                                        @if (Model != null && Model.user.WholesalerShowroomId > 0)
+                                        {
+                                            <select class="form-select" id="ddWholesalerShowroom" name="user.WholesalerShowroomId" value="@Model.user.WholesalerShowroomId" data-val="true" data-val-required="Please select Showroom Location" @(Model.user.userId > 0 ? "disabled" : "")>
+                                                @if (Model.wholesalershowroom != null && Model.wholesalershowroom.Count() > 0)
+                                                {
+                                                    <option>Select Wholesaler Showroom</option>
+                                                    @foreach (var app in Model.wholesalershowroom)
+                                                    {
+                                                        @if (app.showroomId == Model.user.WholesalerShowroomId)
+                                                        {
+                                                            <option selected="selected" value="@app.showroomId">@app.businessName</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@app.showroomId">@app.businessName</option>
+                                                        }
+                                                    }
+                                                }
+                                            </select>
+                                        }
+                                        else
+                                        {
+                                            <select class="form-select" id="ddWholesalerShowroom" name="user.WholesalerShowroomId" value="@Model.user.WholesalerShowroomId" data-val="true" data-val-required="Please select Showroom Location" @(Model.user.userId > 0 ? "disabled" : "")>
+                                            </select>
+                                        }
+                                        @Html.ValidationMessageFor(model => model.user.WholesalerShowroomId)
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix">
+                                    <label class="col-sm-2 col-form-label">Name<span style="color:red">*</span></label>
+                                    <div class="col-sm-10">
+                                        @* <input class="form-control" type="text" name="user.name" value="@Model.user.name"> *@
+                                        @Html.TextBoxFor(model => model.user.name, new { @class = "form-control", tabindex = "0", @placeholder = "Please enter name" })
+                                        @Html.ValidationMessageFor(model => model.user.name)
+                                        @Html.HiddenFor(model => model.user.userId)
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix">
+                                    <label class="col-sm-2 col-form-label">Email<span style="color:red">*</span></label>
+                                    <div class="col-sm-10">
+                                        @Html.HiddenFor(model => model.user.userType)
+                                        @if (Model.user.userId > 0)
+                                        {
+                                            @Html.TextBoxFor(model => model.user.email, new { @class = "form-control", @tabindex = "1", @placeholder = "Please enter email", @readonly = "readonly" })
+                                        }
+                                        else
+                                        {
+                                            @Html.TextBoxFor(model => model.user.email, new { @class = "form-control", @tabindex = "1", @placeholder = "Please enter email" })
+                                        }
+                                        @Html.ValidationMessageFor(model => model.user.email)
+                                    </div>
+                                </div>
+                                @if (Model.user.userId > 0)
+                                {
+                                    <div class="form-group clearfix">
+                                        <label class="col-sm-2 col-form-label">Phone</label>
+                                        <div class="col-sm-10">
+                                            @Html.TextBoxFor(model => model.user.phone, new { @class = "form-control", @tabindex = "2", @type = "number", @maxlength = "10", @placeholder = "Please enter phone" })
+                                            @Html.ValidationMessageFor(model => model.user.phone)
+                                        </div>
+                                    </div>
+                                    <div class="form-group clearfix">
+                                        <label class="col-sm-2 col-form-label">WhatsApp Mobile</label>
+                                        <div class="col-sm-10">
+                                            @Html.TextBoxFor(model => model.user.whatsappMobile, new { @class = "form-control", @tabindex = "3", @type = "number", @maxlength = "10", @placeholder = "Please enter whatsapp mobile" })
+                                            @Html.ValidationMessageFor(model => model.user.whatsappMobile)
+                                        </div>
+                                    </div>
+                                }
+                                <div class="form-group clearfix">
+                                    <label class="col-sm-2 col-form-label">Address</label>
+                                    <div class="col-sm-10">
+                                        @Html.TextBoxFor(model => model.user.address, new { @class = "form-control", @tabindex = "2", @placeholder = "Please enter address" })
+                                        @Html.ValidationMessageFor(model => model.user.address)
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix">
+                                    <label class="col-sm-2 col-form-label">City</label>
+                                    <div class="col-sm-10">
+                                        @Html.TextBoxFor(model => model.user.city, new { @class = "form-control", @tabindex = "3", @placeholder = "Please enter city" })
+                                        @Html.ValidationMessageFor(model => model.user.city)
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix">
+                                    <label class="col-sm-2 col-form-label">State</label>
+                                    <div class="col-sm-10">
+                                        @if (Model != null && Model.usState.Count() > 0)
+                                        {
+                                            <select class="form-select" id="ddstate" name="user.state" value="@Model.user.state" data-val="true" data-val-required="Please select state">
+                                                <option value="">Select State</option>
+                                                @foreach (var app in Model.usState)
+                                                {
+                                                    @if (app.Abbreviations == Model.user.state)
+                                                    {
+                                                        <option selected="selected" value="@app.Abbreviations">@app.Name</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@app.Abbreviations">@app.Name</option>
+                                                    }
+                                                }
+                                            </select>
+                                        }
+                                        @Html.ValidationMessageFor(model => model.user.state)
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix">
+                                    <label class="col-sm-2 col-form-label">Zipcode</label>
+                                    <div class="col-sm-10">
+                                        @Html.TextBoxFor(model => model.user.zipCode, new { @class = "form-control", @placeholder = "Please enter zipCode" })
+                                        @Html.ValidationMessageFor(model => model.user.zipCode)
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix">
+                                    <label class="col-sm-2 col-form-label">Country</label>
+                                    <div class="col-sm-10">
+                                        @Html.TextBoxFor(model => model.user.country, new { @class = "form-control", @placeholder = "Please enter country" })
+                                        @Html.ValidationMessageFor(model => model.user.country)
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="box-footer text-end">
+                                @if (Model.buttonStatus == true)
+                                {
+                                    @if (LuxeIQ.Common.Utilities.ParseEnum<UserType>(Model.user.userType) == UserType.M)
+                                    {
+                                        <a type="button" class="btn btn-block btn-danger" asp-area="" asp-page="/manufactureradmin">Cancel</a>
+                                    }
+                                    else if (LuxeIQ.Common.Utilities.ParseEnum<UserType>(Model.user.userType) == UserType.SA)
+                                    {
+                                        <a type="button" class="btn btn-block btn-danger" asp-area="" asp-page="/salesreps">Cancel</a>
+                                    }
+                                    else
+                                    {
+                                        <a type="button" class="btn btn-block btn-danger" asp-area="" asp-page="/users">Cancel</a>
+                                    }
+
+                                    <input class="btn btn-block btn-primary" type="submit" name="btnSave" value="Submit" />
+                                }
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+@section Scripts {
+    <script type="text/javascript">
+        Helpers.setFormDefaultValidator();
+        $(document).ready(function () {
+
+            if ("@Model.action" == "View") {
+                $("input[class='form-control']").attr("disabled", "disabled");
+                $("select[class='form-select']").attr("disabled", "disabled");
+            }
+
+            $('input[type=submit]').on("click", function (e) {
+                $("form").find("input,textarea,select").each(function () {
+                    if ($(this).is(":visible") && $(this).attr("id") != "user_whatsappMobile") {
+                        $(this).prop("disabled", false).rules('add', {
+                            required: true
+                        });
+                    }
+                    else {
+                        //alert($(this).attr("id"));
+                        $(this).rules('remove', 'required');
+                    }
+                });
+                if (!$("form").valid()) {
+                    e.preventDefault();
+                    return;
+                }
+            });
+            $("#ddWholesaler").change(function () {
+                // if ($("#ddUserType").val() != "@UserType.M") {
+                //     $("#ddManufacturer").closest(".form-group").hide();
+                //     $("#ddMTerritory").closest(".form-group").hide();
+                //     Helpers.showMask();
+                //     $.ajax({
+                //         type: "GET",
+                //         url: '/newuser?handler=ShowroomLocation',
+                //         data: { "wholesalerId": this.value },
+                //         beforeSend: function (xhr) {
+                //             xhr.setRequestHeader("XSRF-TOKEN",
+                //                 $('input:hidden[name="__RequestVerificationToken"]').val());
+                //         },
+                //         contentType: "application/json; charset=utf-8",
+                //         dataType: "json"
+                //     }).done(function (data) {
+                //         console.log(data);
+                //         if (data != null && data.length > 0) {
+                //             var ddlWholesalerShowroom = $("#ddWholesalerShowroom");
+                //             $("#ddWholesalerShowroom").closest(".form-group").show()
+                //             ddlWholesalerShowroom.empty().append($('<option></option>').val('').text('Select Wholesaler Showroom'));
+                //             $.each(data, function (index, item) {
+                //                 ddlWholesalerShowroom.append($('<option></option>').val(item.showroomId).text(item.businessName));
+                //             });
+                //         }
+                //     }).always(function () {
+                //         Helpers.hideMask();
+                //     });
+                // }
+            });
+            // $("#ddManufacturer").change(function () {
+            //     if ($("#ddUserType").val() != "@UserType.M") {
+            //         $("#ddWholesaler").closest(".form-group").hide();
+            //         $("#ddWholesalerShowroom").closest(".form-group").hide();
+            //         Helpers.showMask();
+            //         $.ajax({
+            //             type: "GET",
+            //             url: '/newuser?handler=ManufacturerTerritory',
+            //             data: { "manufacturerId": this.value },
+            //             beforeSend: function (xhr) {
+            //                 xhr.setRequestHeader("XSRF-TOKEN",
+            //                     $('input:hidden[name="__RequestVerificationToken"]').val());
+            //             },
+            //             contentType: "application/json; charset=utf-8",
+            //             dataType: "json"
+            //         }).done(function (data) {
+            //             console.log(data);
+            //             if (data != null && data.length > 0) {
+            //                 var ddlManufacturerTerritory = $("#ddMTerritory");
+            //                 $("#ddMTerritory").closest(".form-group").show()
+            //                 ddlManufacturerTerritory.empty().append($('<option></option>').val('').text('Select Manufacturer Territory'));
+            //                 $.each(data, function (index, item) {
+            //                     ddlManufacturerTerritory.append($('<option></option>').val(item.territoryId).text(item.salesTerritory));
+            //                 });
+            //             }
+            //         }).always(function () {
+            //             Helpers.hideMask();
+            //         });
+            //     }
+            // });
+            $("#ddUserType").change(function () {
+                $("#ddManufacturer").closest(".form-group").hide();
+                $("#ddMTerritory").closest(".form-group").hide();
+                $("#ddWholesaler").closest(".form-group").hide();
+                $("#ddWholesalerShowroom").closest(".form-group").hide();
+                alert(this.value);
+                Helpers.showMask();
+                if (this.value == "@UserType.M") {
+                    $.ajax({
+                        type: "GET",
+                        url: '/newuser?handler=UserType',
+                        data: { "userType": this.value },
+                        beforeSend: function (xhr) {
+                            xhr.setRequestHeader("XSRF-TOKEN",
+                                $('input:hidden[name="__RequestVerificationToken"]').val());
+                        },
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json"
+                    }).done(function (data) {
+                        console.log(data);
+                        if (data != null && data.length > 0) {
+                            var ddlManufacturer = $("#ddManufacturer");
+                            $("#ddManufacturer").closest(".form-group").show();
+                            ddlManufacturer.empty().append($('<option></option>').val('').text('Select Manufacturer'));
+                            $.each(data, function (index, item) {
+                                ddlManufacturer.append($('<option></option>').val(item.manufacturerId).text(item.businessName));
+                            });
+                        }
+                    }).always(function () {
+                        Helpers.hideMask();
+                    });
+                }
+                // else if (this.value == "@UserType.M" || this.value == "@UserType.SA") {
+                //     $.ajax({
+                //         type: "GET",
+                //         url: '/newuser?handler=UserType',
+                //         data: { "userType": this.value },
+                //         beforeSend: function (xhr) {
+                //             xhr.setRequestHeader("XSRF-TOKEN",
+                //                 $('input:hidden[name="__RequestVerificationToken"]').val());
+                //         },
+                //         contentType: "application/json; charset=utf-8",
+                //         dataType: "json"
+                //     }).done(function (data) {
+                //         console.log(data);
+                //         if (data != null && data.length > 0) {
+                //             var ddlWholesaler = $("#ddWholesaler");
+                //             $("#ddWholesaler").closest(".form-group").show();
+                //             ddlWholesaler.empty().append($('<option></option>').val('').text("Select Wholesaler"));
+                //             $.each(data, function (index, item) {
+                //                 ddlWholesaler.append($('<option></option>').val(item.wholesalerId).text(item.businessName));
+                //             });
+                //         }
+                //     }).always(function () {
+                //         Helpers.hideMask();
+                //     });
+                // }
+                else {
+                    Helpers.hideMask();
+                }
+            });
+
+            $('form').data('validator', null);
+            $.validator.unobtrusive.parse($('form'));
+        });
+    </script>
+}

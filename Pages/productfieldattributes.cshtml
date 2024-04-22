@@ -1,0 +1,170 @@
+﻿@page
+@using LuxeIQ.Common
+@using System.Text.RegularExpressions
+@model LuxeIQ.Pages.productfieldattributesModel
+@{
+    ViewData["Title"] = "Product Field Attributes";
+}
+
+<div class="container-full">
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Product Metadata</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    @Html.AntiForgeryToken()
+                    <form method="post">
+                        <div class="box-body">
+                            <div class="row" style="padding-bottom:5px !important">
+                                <div class="col-md-3" style="font-weight:bold">
+                                    <label class="col-form-label">Filed Name</label>
+                                </div>
+                                <div class="col-md-4" style="font-weight:bold">
+                                    <label class="col-form-label">Include in Attribute</label>
+                                </div>
+                                <div class="col-md-4" style="font-weight:bold">
+                                    <label class="col-form-label">Data Type</label>
+
+                                </div>
+                            </div>
+                            @if (Model.productattributes != null)
+                            {
+                                @for (int i = 0; i < Model.productattributes.Count; i++)
+                                {
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <span class="form-label" style="text-transform:capitalize">@Regex.Replace(Model.productattributes[i].field_name, "([a-z])([A-Z])", "$1 $2")</span>
+                                                @Html.HiddenFor(model => model.productattributes[i].field_name)
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <select class="form-select" name="productattributes[@i].include_in_attribute" value="@Model.productattributes[i].include_in_attribute">
+                                                    @if (@Model.productattributes[i].include_in_attribute == true)
+                                                    {
+                                                        <option value="true" selected="selected">Yes</option>
+                                                        <option value="false">No</option>
+                                                    }
+                                                    else if (@Model.productattributes[i].include_in_attribute == false)
+                                                    {
+                                                        <option value="true">Yes</option>
+                                                        <option value="false" selected="selected">No</option>
+                                                    }
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="form-group">
+                                                <select class="form-select" name="productattributes[@i].datatype" value="@Model.productattributes[i].datatype">
+                                                    @foreach (DataType dt in EnumsOrder.ToList<DataType>())
+                                                    {
+                                                        switch (dt)
+                                                        {
+                                                            case DataType.TEXT:
+                                                                @if (Model != null && Model.productattributes != null && !string.IsNullOrEmpty(Model.productattributes[i].datatype) && LuxeIQ.Common.Utilities.ParseEnum<DataType>(Model.productattributes[i].datatype) == dt)
+                                                                {
+                                                                    <option value="@dt" selected="selected">Text</option>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <option value="@dt">Text</option>
+                                                                }
+                                                                break;
+
+                                                            case DataType.INTEGER:
+                                                                @if (Model != null && Model.productattributes != null && !string.IsNullOrEmpty(Model.productattributes[i].datatype) && LuxeIQ.Common.Utilities.ParseEnum<DataType>(Model.productattributes[i].datatype) == dt)
+                                                                {
+                                                                    <option value="@dt" selected="selected">Integer</option>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <option value="@dt">Integer</option>
+                                                                }
+                                                                break;
+                                                            case DataType.DECIMAL:
+                                                                @if (Model != null && Model.productattributes != null && !string.IsNullOrEmpty(Model.productattributes[i].datatype) && LuxeIQ.Common.Utilities.ParseEnum<DataType>(Model.productattributes[i].datatype) == dt)
+                                                                {
+                                                                    <option value="@dt" selected="selected">Decimal</option>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <option value="@dt">Decimal</option>
+                                                                }
+                                                                break;
+                                                        }
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        </div>
+                        <!-- /.box-body -->
+                        @if (Model.productattributes != null)
+                        {
+                            <div class="box-footer text-end">
+                                <input class="btn btn-block btn-primary" type="submit" name="btnSave" value="Save" />
+                            </div>
+                        }
+                    </form>
+                </div>
+                <!-- /.box -->
+            </div>
+        </div>
+        <!-- /.row -->
+    </section>
+    <!-- /.content -->
+</div>
+@section Scripts {
+    <script src="~/assets/vendor_components/datatable/datatables.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // DataTable
+            $('#example5').DataTable();
+
+            $('input[type=submit]').on("click", function (e) {
+                $("form").find("input,textarea,select").each(function () {
+                    if ($(this).is(":visible")) {
+                        $(this).prop("disabled", false).rules('add', {
+                            required: true
+                        });
+                    }
+                    else {
+                        //alert($(this).attr("id"));
+                        $(this).rules('remove', 'required');
+                    }
+                });
+                if (!$("form").valid()) {
+                    e.preventDefault();
+                    return;
+                }
+            });
+        });
+        function confirmupload() {
+            if (document.getElementById("ddManufacturer")) {
+                if (document.getElementById("ddManufacturer").value == undefined || document.getElementById("ddManufacturer").value == "Select Manufacturer") {
+                    alert("Select manufacturer");
+                    return false;
+                }
+                else {
+                    if (document.getElementById("uploadFile").value == undefined || document.getElementById("uploadFile").value == "") {
+                        alert("Select a file to upload");
+                        return false;
+                    }
+                    else {
+                        return true;
+                    }
+                }
+            }
+
+        }
+    </script>
+}

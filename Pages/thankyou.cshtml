@@ -1,0 +1,105 @@
+﻿@page
+@using LuxeIQ.Common
+@using LuxeIQ.ViewModels
+
+@model setpasswordModel
+@{
+    Layout = null;
+    ViewData["Title"] = "Home page";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="~/images/favicon.ico">
+
+    <title>LuxeIQ Admin - Thank you </title>
+
+    <!-- Vendors Style-->
+    <link rel="stylesheet" href="~/css/vendors_css.css">
+
+    <!-- Style-->
+    <link rel="stylesheet" href="~/css/style.css">
+    <link rel="stylesheet" href="~/css/skin_color.css">
+</head>
+<body class="hold-transition theme-primary bg-img" style="background-image: url('/images/auth-bg/bg-1.jpg')">
+    <div class="container h-p100">
+        <div class="row align-items-center justify-content-md-center h-p100">
+
+            <div class="col-12">
+                <div class="row justify-content-center g-0">
+                    <div class="col-lg-5 col-md-5 col-12">
+                        <div class="bg-white rounded10 shadow-lg">
+                            <div class="content-top-agile p-20 pb-0">
+                                <h2 class="text-primary">LuxeIQ</h2>
+                                <p class="mb-0"><b>Thank You</b></p>
+
+                            </div>
+                            <div class="p-40" style="padding-top:20px !important">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="wrapper" style="height:0% !important">
+        <div id="loader"></div>
+    </div>
+    <!-- Vendor JS -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/vendors.min.js"></script>
+    <script src="~/js/pages/chat-popup.js"></script>
+    <script src="~/assets/icons/feather-icons/feather.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/4.0.0/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/js/helpers.js"></script>
+    <script type="text/javascript">
+        Helpers.setFormDefaultValidator();
+        $(document).ready(function () {
+
+            $('input[type=submit]').on("click", function (e) {
+                $("form").find("input,textarea,select").each(function () {
+                    if ($(this).is(":visible") && $(this).attr("id") != "user_whatsappMobile") {
+                        $(this).prop("disabled", false).rules('add', {
+                            required: true
+                        });
+                    }
+                    else {
+                        //alert($(this).attr("id"));
+                        $(this).rules('remove', 'required');
+                    }
+                });
+                if (!$("form").valid()) {
+                    e.preventDefault();
+                    return;
+                }
+                else if ($("#user_password").val() != $("#user_confirmpassword").val()) {
+
+                    alert('Password must match with confirm password');
+                    e.preventDefault();
+                    return;
+                }
+                else if ($("#user_password").val() == $("#user_confirmpassword").val()) {
+                    var password = new RegExp("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$", "ig");
+                    if (!password.test($("#user_password").val())) {
+                        alert('Password should contain minimum eight characters, at least one letter and one number');
+                        e.preventDefault();
+                        return;
+                    }
+                }
+            });
+            $('form').data('validator', null);
+            $.validator.unobtrusive.parse($('form'));
+        });
+    </script>
+</body>
+</html>
+

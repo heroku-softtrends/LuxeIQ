@@ -1,0 +1,102 @@
+﻿@page
+@using LuxeIQ.Common
+@using LuxeIQ.ViewModels
+@using System.Text.RegularExpressions
+@model addeditproductsModel
+@{
+    ViewData["Title"] = "Products";
+}
+<div class="container-full">
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">View Product</h3>
+                    </div>
+                    <div class="box-body">
+                        <form method="post">
+                            @if (Model.products != null)
+                            {
+                                @for (int i = 0; i < Model.productattributes.Count - 1; i = i + 2)
+                                {
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label">@Regex.Replace(Model.productattributes[i].field_name, "([a-z])([A-Z])", "$1 $2")</label>
+                                                <input type="text" class="form-control" value="@Model.products[Model.productattributes[i].field_name]" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label">@Regex.Replace(@Model.productattributes[i + 1].field_name, "([a-z])([A-Z])", "$1 $2")</label>
+                                                <input type="text" class="form-control" value="@Model.products[Model.productattributes[i+1].field_name]" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                @* @foreach (ProductAttribute productattributes in Model.productattributes)
+                            {
+                            <div class="col-md-6">
+                            <div class="form-group">
+                            <label class="form-label">@productattributes.field_name</label>
+                            <input type="text" class="form-control" value="@Model.products[productattributes.field_name]" />
+                            </div>
+                            </div>
+                            } *@
+                            }
+                            @*  <div class="row">
+                            <div class="col-md-6">
+                            <div class="form-group">
+                            <label class="form-label">Manufacturer</label>
+                            @if (Model != null && Model.product.manufacturerId > 0)
+                            {
+                            <select class="form-select" id="ddManufacturer" name="product.ManufacturerId" value="@Model.product.manufacturerId" data-val="true" data-val-required="Select Manufacturer">
+                            @if (Model.manufacturers != null && Model.manufacturers.Count() > 0)
+                            {
+                            <option>Select Manufacturer</option>
+                            @foreach (var app in Model.manufacturers)
+                            {
+                            @if (app.manufacturerId == Model.product.manufacturerId)
+                            {
+                            <option selected="selected" value="@app.manufacturerId">@app.businessName</option>
+                            }
+                            else
+                            {
+                            <option value="@app.manufacturerId">@app.businessName</option>
+                            }
+                            }
+                            }
+                            </select>
+                            }
+                            else
+                            {
+                            <select class="form-select" id="ddManufacturer" name="product.ManufacturerId" value="@Model.product.manufacturerId" data-val="true" data-val-required="Select Manufacturer">
+                            </select>
+                            }
+                            </div>
+                            </div>
+
+                            </div> *@
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+@section Scripts {
+    <script type="text/javascript">
+        Helpers.setFormDefaultValidator();
+        $(document).ready(function () {
+            if ("@Model.action" == "View") {
+                $("input[class='form-control']").attr("disabled", "disabled");
+                $("select[class='form-select']").attr("disabled", "disabled");
+            }
+
+            $('form').data('validator', null);
+            $.validator.unobtrusive.parse($('form'));
+        });
+    </script>
+}

@@ -1,0 +1,104 @@
+﻿@page
+@model LuxeIQ.Pages.manufactureradminModel
+@{
+    ViewData["Title"] = "Manufacturer Admins";
+}
+<div class="container-full">
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-12">
+
+                <div class="box">
+                    <div class="box-header with-border">
+                        <div class="row col-md-12">
+                            <div class="col-md-9">
+                                <h3 class="box-title">Manufacturer Admins</h3>
+                            </div>
+                            <div class="col-md-3 text-end pb-15">
+                                <a asp-area="" class="btn btn-block btn-info" asp-page="/newuser" asp-route-userType="M" asp-route-type="Add">
+                                    <span>Add Manufacturer Admin</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-body table-responsive">
+                        <table id="example5" class="table table-bordered table-striped" style="width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th>Manufacturer</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Mobile</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null && Model.users != null && Model.users.Count() > 0)
+                                {
+                                    @foreach (var app in Model.users)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @app.ManufacturerName
+                                            </td>
+                                            <td>
+                                                @app.name
+                                            </td>
+                                            <td>
+                                                <span>@app.email</span>
+                                            </td>
+                                            <td>
+                                                @app.phone
+                                            </td>
+                                            <td>
+                                                @app.whatsappMobile
+                                            </td>
+                                            <td>
+                                                @(!string.IsNullOrEmpty(app.activationStatus) ? app.activationStatus : "NO")
+                                            </td>
+                                            <td>
+                                                <a asp-page="newuser" class="btn btn-xs btn-primary" asp-page-handler="view" asp-route-type="View" asp-route-id="@app.userId">
+                                                    <span>View</span>
+                                                </a>
+                                                <a asp-page="newuser" class="btn btn-xs btn-primary" asp-page-handler="view" asp-route-type="Edit" asp-route-id="@app.userId">
+                                                    <span>Edit</span>
+                                                </a>
+                                                @*  <a asp-page="./newuser" class="btn btn-xs btn-primary" asp-route-id="@app.userId">Edit</a> *@
+                                                @*   <form asp-page-handler="delete" asp-route-id="@app.userId" method="post">
+                                        <button class="btn btn-xs btn-danger" onclick="return confirm('Are you sure you want to delete user?')">Delete</button>
+                                        </form> *@
+                                                @* <a asp-page-handler="Delete" asp-route-id="@app.userId" onclick="return confirm('Are you sure you want to delete user?')">Delete
+                                        </a> *@
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+@section Scripts {
+    <script src="~/assets/vendor_components/datatable/datatables.min.js"></script>
+    <script type="text/javascript">
+        Helpers.setFormDefaultValidator();
+        $(document).ready(function () {
+            // DataTable
+            $('#example5').DataTable();
+
+            $("a[name=btnSave]").on("click", function (e) {
+                e.preventDefault();
+
+                if ($("form").valid()) {
+                    alert("form valid");
+                }
+            });
+        });
+    </script>
+}

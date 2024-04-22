@@ -1,0 +1,166 @@
+﻿@page
+@using LuxeIQ.Common
+@using LuxeIQ.ViewModels
+
+@model addeditwholesalerhqModel
+@{
+    ViewData["Title"] = "Wholesaler HQ";
+}
+<div class="container-full">
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">View Wholesaler HQ</h3>
+                    </div>
+                    <div class="box-body">
+                        <form method="post">
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Wholesaler</label>
+                                        @if (Model != null && Model.wholesalerhq.wholesalerId > 0)
+                                        {
+                                            <select class="form-select" id="ddWholesaler" name="wholesalerhq.wholesalerId" value="@Model.wholesalerhq.wholesalerId" data-val="true" data-val-required="Select Wholesaler">
+                                                @if (Model.wholesalers != null && Model.wholesalers.Count() > 0)
+                                                {
+                                                    <option>Select Wholesaler</option>
+                                                    @foreach (var app in Model.wholesalers)
+                                                    {
+                                                        @if (app.wholesalerId == Model.wholesalerhq.wholesalerId)
+                                                        {
+                                                            <option selected="selected" value="@app.wholesalerId">@app.businessName</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@app.manufacturerId">@app.businessName</option>
+                                                        }
+                                                    }
+                                                }
+                                            </select>
+                                        }
+                                        else
+                                        {
+                                            <select class="form-select" id="ddWholesaler" name="wholesalerhq.wholesalerId" value="@Model.wholesalerhq.wholesalerId" data-val="true" data-val-required="Select Wholesaler">
+                                            </select>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Account No</label>
+                                        @Html.TextBoxFor(model => model.wholesalerhq.accountNo, new { @class = "form-control", tabindex = "1", @placeholder = "Account No" })
+                                        @Html.ValidationMessageFor(model => model.wholesalerhq.accountNo)
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Sales Region</label>
+                                        @Html.TextBoxFor(model => model.wholesalerhq.salesRegion, new { @class = "form-control", tabindex = "2", @placeholder = "Sales Region" })
+                                        @Html.ValidationMessageFor(model => model.wholesalerhq.salesRegion)
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Customer</label>
+                                        @Html.TextBoxFor(model => model.wholesalerhq.customer, new { @class = "form-control", tabindex = "3", @placeholder = "Customer" })
+                                        @Html.ValidationMessageFor(model => model.wholesalerhq.customer)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Address</label>
+                                        @Html.TextBoxFor(model => model.wholesalerhq.address, new { @class = "form-control", tabindex = "4", @placeholder = "Address" })
+                                        @Html.ValidationMessageFor(model => model.wholesalerhq.address)
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">City</label>
+                                        @Html.TextBoxFor(model => model.wholesalerhq.city, new { @class = "form-control", tabindex = "5", @placeholder = "City" })
+                                        @Html.ValidationMessageFor(model => model.wholesalerhq.city)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">State</label>
+                                        @Html.TextBoxFor(model => model.wholesalerhq.state, new { @class = "form-control", tabindex = "6", @placeholder = "State" })
+                                        @Html.ValidationMessageFor(model => model.wholesalerhq.state)
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Zipcode</label>
+                                        @Html.TextBoxFor(model => model.wholesalerhq.zipcode, new { @class = "form-control", tabindex = "7", @placeholder = "Zipcode" })
+                                        @Html.ValidationMessageFor(model => model.wholesalerhq.zipcode)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Country</label>
+                                        @Html.TextBoxFor(model => model.wholesalerhq.country, new { @class = "form-control", tabindex = "8", @placeholder = "Country" })
+                                        @Html.ValidationMessageFor(model => model.wholesalerhq.country)
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Phone</label>
+                                        @Html.TextBoxFor(model => model.wholesalerhq.phone, new { @class = "form-control", tabindex = "9", @placeholder = "Phone" })
+                                        @Html.ValidationMessageFor(model => model.wholesalerhq.phone)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Fax</label>
+                                        @Html.TextBoxFor(model => model.wholesalerhq.fax, new { @class = "form-control", tabindex = "10", @placeholder = "Fax" })
+                                        @Html.ValidationMessageFor(model => model.wholesalerhq.fax)
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Sales Territory</label>
+                                        @Html.TextBoxFor(model => model.wholesalerhq.salesTerritory, new { @class = "form-control", tabindex = "11", @placeholder = "Sales Territory" })
+                                        @Html.ValidationMessageFor(model => model.wholesalerhq.salesTerritory)
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="box-footer">
+                                @* <a type="button" class="btn btn-block btn-danger" asp-area="" asp-page="/users">Cancel</a>
+                                <input class="btn btn-block btn-primary" type="submit" name="btnSave" value="Submit" /> *@
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+@section Scripts {
+    <script type="text/javascript">
+        Helpers.setFormDefaultValidator();
+        $(document).ready(function () {
+
+            if ("@Model.action" == "View") {
+                $("input[class='form-control']").attr("disabled", "disabled");
+                $("select[class='form-select']").attr("disabled", "disabled");
+            }
+            $('form').data('validator', null);
+            $.validator.unobtrusive.parse($('form'));
+        });
+    </script>
+}
